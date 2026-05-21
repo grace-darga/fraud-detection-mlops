@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.env
+*.egg-info/
+dist/
+build/
+
+# Data (géré par DVC)
+data/raw/
+data/processed/
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Modèles (géré par DVC)
+models/
+!models/.gitkeep
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Métriques (versionnées par DVC, pas git)
+metrics/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Tests
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Docker
+.dockerignore
+
+# Secrets
+credentials.json
+*.pem
+*.key
+.env.local
