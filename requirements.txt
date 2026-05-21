@@ -9,3 +9,6 @@ pytest
 pytest-cov
 httpx
 imbalanced-learn
+xgboost==2.1.4
+dvc
+dvc-gdrive
