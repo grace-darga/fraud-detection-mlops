@@ -8,3 +8,4 @@ pydantic
 pytest
 pytest-cov
 httpx
+imbalanced-learn
