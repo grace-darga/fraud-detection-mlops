@@ -30,9 +30,9 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Lint avec flake8
-          run: |
-            pip install flake8
-            flake8 src/ tests/ --max-line-length=100 --ignore=E501,W503,F401,E305,W292
+        run: |
+          pip install flake8
+          flake8 src/ tests/ --max-line-length=100 --ignore=E501,W503,F401,E305,W292
 
       - name: Run tests avec pytest
         run: pytest tests/ -v --tb=short --cov=src --cov-report=xml
@@ -81,10 +81,10 @@ jobs:
           import json
           with open('metrics/scores.json') as f:
               m = json.load(f)
-          print('📊 Métriques obtenues:', m)
-          assert m['roc_auc'] > ${{ env.MIN_ROC_AUC }}, f'ROC-AUC trop bas: {m[\"roc_auc\"]} < ${{ env.MIN_ROC_AUC }}'
-          assert m['f1'] > ${{ env.MIN_F1 }}, f'F1 trop bas: {m[\"f1\"]} < ${{ env.MIN_F1 }}'
-          print('✅ Seuils de qualité validés')
+          print('Métriques obtenues:', m)
+          assert m['roc_auc'] > ${{ env.MIN_ROC_AUC }}, f'ROC-AUC trop bas: {m[\"roc_auc\"]}'
+          assert m['f1'] > ${{ env.MIN_F1 }}, f'F1 trop bas: {m[\"f1\"]}'
+          print('Seuils de qualite valides')
           "
 
       - name: Push métriques vers DVC
@@ -97,7 +97,6 @@ jobs:
           path: |
             models/model.pkl
             metrics/scores.json
-            metrics/full_report.json
 
   # ── 3. Build & Deploy Docker ──────────────────────────────────────────────
   deploy:
@@ -133,20 +132,9 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/fraud-detection:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/fraud-detection:${{ github.sha }}
-          labels: |
-            org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}
-
-      - name: Déployer sur le serveur (exemple VPS)
-        run: |
-          echo "🚀 Image déployée: ${{ secrets.DOCKERHUB_USERNAME }}/fraud-detection:${{ github.sha }}"
-          # Décommenter et adapter pour un déploiement réel:
-          # ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
-          #   "docker pull ${{ secrets.DOCKERHUB_USERNAME }}/fraud-detection:latest && \
-          #    docker-compose up -d --no-deps api"
 
       - name: Notifier le succès
         run: |
-          echo "✅ Déploiement terminé avec succès"
-          echo "   Commit: ${{ github.sha }}"
-          echo "   Image: ${{ secrets.DOCKERHUB_USERNAME }}/fraud-detection:latest"
+          echo "Déploiement terminé avec succès"
+          echo "Commit: ${{ github.sha }}"
+          echo "Image: ${{ secrets.DOCKERHUB_USERNAME }}/fraud-detection:latest"
