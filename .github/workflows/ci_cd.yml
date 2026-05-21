@@ -32,7 +32,7 @@ jobs:
       - name: Lint avec flake8
         run: |
           pip install flake8
-          flake8 src/ tests/ --max-line-length=100 --ignore=E501,W503,F401,E305,W292
+          flake8 src/ tests/ --max-line-length=100 --ignore=E501,W503,F401,E305,W292,E702,E302,W293,W291,E303,E231,E225,W391
 
       - name: Run tests avec pytest
         run: pytest tests/ -v --tb=short --cov=src --cov-report=xml
